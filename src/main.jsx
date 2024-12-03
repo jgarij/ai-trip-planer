@@ -4,6 +4,8 @@ import './index.css'
 import { GoogleOAuthProvider } from "@react-oauth/google"
 import App from './App.jsx'
 import * as React from "react";
+import { UserProvider } from './Context/UserContext';
+import { Link } from 'react-router-dom';
 import My_Trips from './components/view-trip/My-trips';
 import Footer from './components/custom/Footer';
 import { Toaster } from './components/ui/toaster';
@@ -26,20 +28,23 @@ const router = createBrowserRouter([
     element:<TripDetails/>
   },
   {
-    path:"my-trips",
-    element:<My_Trips></My_Trips>
+    path:"/my-trips",
+    element:<My_Trips/>
   }
 
 ]);
-const client_id = import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID
+const client_id = import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID;
 createRoot(document.getElementById('root')).render(
- <>
+ 
  <GoogleOAuthProvider clientId={client_id}>
- <Header></Header>
- <Toaster/>
+  <UserProvider>
+  <Header/>
+  <Toaster/>
   <RouterProvider router={router} />
+  
   <Footer></Footer>
+  </UserProvider>
   </GoogleOAuthProvider>
-  </>
+
 
 )
